@@ -1,0 +1,18 @@
+# Environment & credentials
+.env
+
+# Upload files
+public/uploads/videos/
+public/uploads/thumbnails/
+public/uploads/avatars/
+*.mp4
+
+# Dependencies
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/

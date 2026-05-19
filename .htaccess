@@ -1,0 +1,5 @@
+RewriteEngine On
+RewriteBase /skillup
+
+RewriteCond %{REQUEST_URI} !^/skillup
+RewriteRule ^(.*)$ /skillup$1 [L,R=301]
