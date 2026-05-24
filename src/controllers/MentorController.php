@@ -273,8 +273,7 @@ try {
     require_once APP_ROOT . '/src/helpers/CloudinaryService.php';
     $videoUrl = CloudinaryService::uploadVideo($file['tmp_name'], $file['name']);
 } catch (Exception $e) {
-    flash('error', 'Gagal upload video ke cloud: ' . $e->getMessage());
-    redirect('/mentor/course/' . $courseId . '/video/add');
+    die('<h1>ERROR: ' . $e->getMessage() . '</h1>');
 }
     $lastOrder = Database::row('SELECT MAX(order_num) AS max_ord FROM videos WHERE course_id=?', [$courseId]);
     $nextOrder = ($lastOrder['max_ord'] ?? 0) + 1;
