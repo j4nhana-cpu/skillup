@@ -8,12 +8,16 @@ class CloudinaryService
         $apiSecret = CLOUDINARY_API_SECRET;
 
         $timestamp = time();
-        $publicId  = 'skillup/videos/' . pathinfo($fileName, PATHINFO_FILENAME) . '_' . $timestamp;
+        
+        // Sanitize filename
+        $cleanName = pathinfo($fileName, PATHINFO_FILENAME);
+        $cleanName = preg_replace('/[^a-zA-Z0-9_-]/', '_', $cleanName);
+        $cleanName = substr($cleanName, 0, 50);
+        $publicId  = 'skillup/videos/' . $cleanName . '_' . $timestamp;
         
         $signatureString = 'public_id=' . $publicId . '&timestamp=' . $timestamp . $apiSecret;
         $signature = sha1($signatureString);
 
-        // Copy file ke temp location yang pasti bisa dibaca
         $tempFile = sys_get_temp_dir() . '/' . uniqid('upload_') . '.' . pathinfo($fileName, PATHINFO_EXTENSION);
         copy($filePath, $tempFile);
 
@@ -32,11 +36,10 @@ class CloudinaryService
             ],
         ]);
 
-        $response = curl_exec($ch);
+        $response  = curl_exec($ch);
         $curlError = curl_error($ch);
         curl_close($ch);
 
-        // Hapus temp file
         if (file_exists($tempFile)) unlink($tempFile);
 
         if ($curlError) {
@@ -53,6 +56,6 @@ class CloudinaryService
             return $data['secure_url'];
         }
         
-       throw new Exception('Cloudinary upload failed. Raw response: ' . $response . ' | JSON: ' . json_encode($data));git;
+        throw new Exception('Cloudinary upload failed: ' . json_encode($data));
     }
 }
