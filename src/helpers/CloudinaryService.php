@@ -1,11 +1,11 @@
 <?php
 class CloudinaryService
 {
-   public static function uploadVideo(string $filePath, string $fileName): string
-{
-    $cloudName = CLOUDINARY_CLOUD_NAME;
-    $apiKey    = CLOUDINARY_API_KEY;
-    $apiSecret = CLOUDINARY_API_SECRET;
+    public static function uploadVideo(string $filePath, string $fileName): string
+    {
+        $cloudName = CLOUDINARY_CLOUD_NAME;
+        $apiKey    = CLOUDINARY_API_KEY;
+        $apiSecret = CLOUDINARY_API_SECRET;
 
     // Debug - tulis ke log
     error_log("Cloudinary Debug - Cloud: $cloudName, Key: $apiKey, Secret: " . (empty($apiSecret) ? 'KOSONG' : 'ADA'));
@@ -49,4 +49,5 @@ class CloudinaryService
     }
     
     throw new Exception('Cloudinary upload failed: ' . ($data['error']['message'] ?? json_encode($data)));
+}
 }
