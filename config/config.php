@@ -34,7 +34,7 @@ define('MIDTRANS_CLIENT_KEY',     getenv('MIDTRANS_CLIENT_KEY')  ?: '');
 define('MIDTRANS_IS_PRODUCTION',  false);
 
 // ── Base Path ────────────────────────────────────────────────
-define('BASE_PATH', '/skillup/public');
+define('BASE_PATH', '');
 
 // ── Timezone & Locale ────────────────────────────────────────
 date_default_timezone_set('Asia/Jakarta');
