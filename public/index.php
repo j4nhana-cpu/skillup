@@ -25,12 +25,14 @@ header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 header('Cache-Control: post-check=0, pre-check=0', false);
 header('Pragma: no-cache');
 
-// Session dengan setting aman
+$isHttps = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+        || (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
+
 session_set_cookie_params([
-    'lifetime' => 7200,        // 2 jam
+    'lifetime' => 7200,
     'path'     => '/',
-    'secure'   => IS_PRODUCTION,  // HTTPS only di production
-    'httponly' => true,            // tidak bisa diakses JS
+    'secure'   => $isHttps,
+    'httponly' => true,
     'samesite' => 'Lax',
 ]);
 session_start();
