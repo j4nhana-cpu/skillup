@@ -7,47 +7,52 @@ class CloudinaryService
         $apiKey    = CLOUDINARY_API_KEY;
         $apiSecret = CLOUDINARY_API_SECRET;
 
-    // Debug - tulis ke log
-    error_log("Cloudinary Debug - Cloud: $cloudName, Key: $apiKey, Secret: " . (empty($apiSecret) ? 'KOSONG' : 'ADA'));
-    error_log("File path: $filePath, exists: " . (file_exists($filePath) ? 'YES' : 'NO'));
+        $timestamp = time();
+        $publicId  = 'skillup/videos/' . pathinfo($fileName, PATHINFO_FILENAME) . '_' . $timestamp;
+        
+        $signatureString = 'public_id=' . $publicId . '&timestamp=' . $timestamp . $apiSecret;
+        $signature = sha1($signatureString);
 
-    $timestamp = time();
-    $publicId  = 'skillup/videos/' . pathinfo($fileName, PATHINFO_FILENAME) . '_' . $timestamp;
-    
-    $signatureString = 'public_id=' . $publicId . '&timestamp=' . $timestamp . $apiSecret;
-    $signature = sha1($signatureString);
+        // Copy file ke temp location yang pasti bisa dibaca
+        $tempFile = sys_get_temp_dir() . '/' . uniqid('upload_') . '.' . pathinfo($fileName, PATHINFO_EXTENSION);
+        copy($filePath, $tempFile);
 
-    $ch = curl_init();
-    curl_setopt_array($ch, [
-        CURLOPT_URL            => "https://api.cloudinary.com/v1_1/{$cloudName}/video/upload",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => [
-            'file'      => new CURLFile($filePath),
-            'api_key'   => $apiKey,
-            'timestamp' => $timestamp,
-            'public_id' => $publicId,
-            'signature' => $signature,
-        ],
-    ]);
+        $ch = curl_init();
+        curl_setopt_array($ch, [
+            CURLOPT_URL            => "https://api.cloudinary.com/v1_1/{$cloudName}/video/upload",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST           => true,
+            CURLOPT_TIMEOUT        => 300,
+            CURLOPT_POSTFIELDS     => [
+                'file'      => new CURLFile($tempFile, 'video/mp4', $fileName),
+                'api_key'   => $apiKey,
+                'timestamp' => $timestamp,
+                'public_id' => $publicId,
+                'signature' => $signature,
+            ],
+        ]);
 
-    $response = curl_exec($ch);
-    $error    = curl_error($ch);
-    curl_close($ch);
+        $response = curl_exec($ch);
+        $curlError = curl_error($ch);
+        curl_close($ch);
 
-    error_log("Cloudinary Response: " . $response);
-    error_log("CURL Error: " . $error);
+        // Hapus temp file
+        if (file_exists($tempFile)) unlink($tempFile);
 
-    if ($error) {
-        throw new Exception('CURL error: ' . $error);
+        if ($curlError) {
+            throw new Exception('CURL error: ' . $curlError);
+        }
+
+        if (empty($response)) {
+            throw new Exception('Empty response from Cloudinary');
+        }
+
+        $data = json_decode($response, true);
+        
+        if (isset($data['secure_url'])) {
+            return $data['secure_url'];
+        }
+        
+        throw new Exception('Cloudinary upload failed: ' . json_encode($data));
     }
-
-    $data = json_decode($response, true);
-    
-    if (isset($data['secure_url'])) {
-        return $data['secure_url'];
-    }
-    
-    throw new Exception('Cloudinary upload failed: ' . ($data['error']['message'] ?? json_encode($data)));
-}
 }
