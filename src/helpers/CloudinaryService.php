@@ -53,6 +53,6 @@ class CloudinaryService
             return $data['secure_url'];
         }
         
-        throw new Exception('Cloudinary upload failed: ' . json_encode($data));
+       throw new Exception('Cloudinary upload failed. Raw response: ' . $response . ' | JSON: ' . json_encode($data));git;
     }
 }
