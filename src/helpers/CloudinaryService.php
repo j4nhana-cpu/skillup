@@ -1,0 +1,46 @@
+<?php
+class CloudinaryService
+{
+    public static function uploadVideo(string $filePath, string $fileName): string
+    {
+        $cloudName = CLOUDINARY_CLOUD_NAME;
+        $apiKey    = CLOUDINARY_API_KEY;
+        $apiSecret = CLOUDINARY_API_SECRET;
+
+        $timestamp = time();
+        $publicId  = 'skillup/videos/' . pathinfo($fileName, PATHINFO_FILENAME) . '_' . $timestamp;
+        
+        $signature = sha1(
+            'public_id=' . $publicId .
+            '&timestamp=' . $timestamp .
+            '&resource_type=video' .
+            $apiSecret
+        );
+
+        $ch = curl_init();
+        curl_setopt_array($ch, [
+            CURLOPT_URL            => "https://api.cloudinary.com/v1_1/{$cloudName}/video/upload",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => [
+                'file'          => new CURLFile($filePath),
+                'api_key'       => $apiKey,
+                'timestamp'     => $timestamp,
+                'public_id'     => $publicId,
+                'resource_type' => 'video',
+                'signature'     => $signature,
+            ],
+        ]);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $data = json_decode($response, true);
+        
+        if (isset($data['secure_url'])) {
+            return $data['secure_url'];
+        }
+        
+        throw new Exception('Cloudinary upload failed: ' . ($data['error']['message'] ?? 'Unknown error'));
+    }
+}

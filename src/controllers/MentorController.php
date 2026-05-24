@@ -130,21 +130,13 @@ class MentorController
                 flash('error', 'Gagal mengupload video. Error: ' . $file['error']);
                 redirect('/mentor/course/create');
             }
-
-            if (!is_dir(APP_ROOT . '/public/uploads/videos')) {
-                mkdir(APP_ROOT . '/public/uploads/videos', 0755, true);
+            try {
+                require_once APP_ROOT . '/src/helpers/CloudinaryService.php';
+                $videoUrl = CloudinaryService::uploadVideo($file['tmp_name'], $file['name']);
+            } catch (Exception $e) {
+                flash('error', 'Gagal upload video ke cloud: ' . $e->getMessage());
+                redirect('/mentor/course/' . $courseId . '/video/add');
             }
-
-            $ext      = pathinfo($file['name'], PATHINFO_EXTENSION);
-            $filename = 'uploads/videos/' . uniqid('video_', true) . '.' . strtolower($ext);
-            $dest     = APP_ROOT . '/public/' . $filename;
-
-            if (!move_uploaded_file($file['tmp_name'], $dest)) {
-                flash('error', 'Gagal menyimpan video ke server.');
-                redirect('/mentor/course/create');
-            }
-
-            $videoUrl  = '/' . $filename;
 
             Database::insert(
     'INSERT INTO videos (course_id, title, video_url, order_num) VALUES (?,?,?,?)',
@@ -277,20 +269,13 @@ public static function addVideo(int $courseId): void
         redirect('/mentor/course/' . $courseId . '/video/add');
     }
 
-    if (!is_dir(APP_ROOT . '/public/uploads/videos')) {
-        mkdir(APP_ROOT . '/public/uploads/videos', 0755, true);
-    }
-
-    $ext      = pathinfo($file['name'], PATHINFO_EXTENSION);
-    $filename = 'uploads/videos/' . uniqid('video_', true) . '.' . strtolower($ext);
-    $dest     = APP_ROOT . '/public/' . $filename;
-
-    if (!move_uploaded_file($file['tmp_name'], $dest)) {
-        flash('error', 'Gagal menyimpan video ke server.');
-        redirect('/mentor/course/' . $courseId . '/video/add');
-    }
-
-    $videoUrl  = '/' . $filename;
+try {
+    require_once APP_ROOT . '/src/helpers/CloudinaryService.php';
+    $videoUrl = CloudinaryService::uploadVideo($file['tmp_name'], $file['name']);
+} catch (Exception $e) {
+    flash('error', 'Gagal upload video ke cloud: ' . $e->getMessage());
+    redirect('/mentor/course/' . $courseId . '/video/add');
+}
     $lastOrder = Database::row('SELECT MAX(order_num) AS max_ord FROM videos WHERE course_id=?', [$courseId]);
     $nextOrder = ($lastOrder['max_ord'] ?? 0) + 1;
 

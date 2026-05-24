@@ -39,6 +39,11 @@ define('BASE_PATH', '');
 // ── Timezone & Locale ────────────────────────────────────────
 date_default_timezone_set('Asia/Jakarta');
 
+// ── Cloudinary ───────────────────────────────────────────────
+define('CLOUDINARY_CLOUD_NAME', getenv('CLOUDINARY_CLOUD_NAME') ?: '');
+define('CLOUDINARY_API_KEY',    getenv('CLOUDINARY_API_KEY')    ?: '');
+define('CLOUDINARY_API_SECRET', getenv('CLOUDINARY_API_SECRET') ?: '');
+
 // ── Pengaturan Error ─────────────────────────────────────────
 if (IS_PRODUCTION) {
     error_reporting(0);
