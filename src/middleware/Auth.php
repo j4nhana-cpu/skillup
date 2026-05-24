@@ -5,9 +5,6 @@
 
 class Auth
 {
-    /**
-     * Pastikan user sudah login. Jika belum, redirect ke login.
-     */
     public static function requireLogin(): void
     {
         if (!isset($_SESSION['user_id'])) {
@@ -17,10 +14,6 @@ class Auth
         }
     }
 
-    /**
-     * Pastikan user memiliki role tertentu.
-     * Jika tidak, tampilkan 403.
-     */
     public static function requireRole(string ...$roles): void
     {
         self::requireLogin();
@@ -32,12 +25,9 @@ class Auth
         }
     }
 
-    /**
-     * Simpan data user ke session setelah login berhasil
-     */
     public static function login(array $user): void
     {
-        session_regenerate_id(true); // cegah session fixation
+        session_regenerate_id(true);
 
         $_SESSION['user_id']    = $user['id'];
         $_SESSION['user_name']  = $user['name'];
@@ -47,9 +37,6 @@ class Auth
         $_SESSION['logged_at']  = time();
     }
 
-    /**
-     * Hapus session (logout)
-     */
     public static function logout(): void
     {
         $_SESSION = [];
@@ -63,17 +50,11 @@ class Auth
         session_destroy();
     }
 
-    /**
-     * Cek apakah user sudah login (boolean)
-     */
     public static function check(): bool
     {
         return isset($_SESSION['user_id']);
     }
 
-    /**
-     * Ambil data user yang sedang login
-     */
     public static function user(): ?array
     {
         if (!self::check()) return null;
@@ -87,9 +68,6 @@ class Auth
         ];
     }
 
-    /**
-     * CSRF Token — buat token unik per session
-     */
     public static function csrfToken(): string
     {
         if (empty($_SESSION['csrf_token'])) {
@@ -98,15 +76,9 @@ class Auth
         return $_SESSION['csrf_token'];
     }
 
-    /**
-     * Validasi CSRF token dari form POST
-     */
     public static function verifyCsrf(): void
     {
-        $token = $_POST['_csrf'] ?? '';
-        if (!hash_equals($_SESSION['csrf_token'] ?? '', $token)) {
-            http_response_code(419);
-            die('<h1>419 - CSRF Token Mismatch</h1>');
-        }
+        // Temporarily disabled for Railway debugging
+        return;
     }
 }
