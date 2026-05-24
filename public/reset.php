@@ -1,7 +1,12 @@
 <?php
-require_once '../config/config.php';
-require_once '../src/helpers/Database.php';
+$host = getenv('DB_HOST');
+$port = getenv('DB_PORT') ?: '3306';
+$name = getenv('DB_NAME');
+$user = getenv('DB_USER');
+$pass = getenv('DB_PASS');
 
+$pdo = new PDO("mysql:host=$host;port=$port;dbname=$name", $user, $pass);
 $hash = password_hash('password123', PASSWORD_BCRYPT, ['cost' => 10]);
-Database::query("UPDATE users SET password=? WHERE id IN (1,14,15)", [$hash]);
-echo "Password berhasil direset! Hash: " . $hash;
+$stmt = $pdo->prepare("UPDATE users SET password=? WHERE id IN (1,14,15)");
+$stmt->execute([$hash]);
+echo "Berhasil! Password semua user sudah direset ke: password123";
