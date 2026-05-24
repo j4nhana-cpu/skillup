@@ -13,6 +13,8 @@ RUN apt-get update && apt-get install -y \
     && a2enmod rewrite \
     && rm -rf /var/lib/apt/lists/*
 
+RUN mkdir -p /var/lib/php/sessions && chmod 777 /var/lib/php/sessions
+
 COPY . /var/www/html/
 RUN chown -R www-data:www-data /var/www/html
 
