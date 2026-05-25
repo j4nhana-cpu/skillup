@@ -379,7 +379,7 @@ try {
         $mentorId = $_SESSION['user_id'];
         
         // Cek apakah mentor sudah isi rekening
-        $mentor = Database::row('SELECT bank_account FROM users WHERE id = ?', [$mentorId]);
+        $mentor = Database::row('SELECT name, bank_account FROM users WHERE id = ?', [$mentorId]);
         if (empty($mentor['bank_account'])) {
             flash('error', 'Lengkapi data rekening di profil terlebih dahulu.');
             redirect('/mentor/revenue');
@@ -412,9 +412,9 @@ try {
         $bankInfo = self::parseBankAccount($mentor['bank_account']);
 
         Database::insert(
-            'INSERT INTO mentor_payouts (mentor_id, amount, bank_name, account_number, status)
-             VALUES (?, ?, ?, ?, \'pending\')',
-            [$mentorId, $amount, $bankInfo['bank_name'], $bankInfo['account_number']]
+            'INSERT INTO mentor_payouts (mentor_id, amount, bank_name, account_name, account_number, status)
+             VALUES (?, ?, ?, ?, ?, \'pending\')',
+            [$mentorId, $amount, $bankInfo['bank_name'], $mentor['name'], $bankInfo['account_number']]
         );
 
         // Update revenue_shares status menjadi pending untuk payout

@@ -85,6 +85,7 @@ class Database
                 mentor_id INT UNSIGNED NOT NULL,
                 amount DECIMAL(10,2) NOT NULL,
                 bank_name VARCHAR(50) NOT NULL,
+                account_name VARCHAR(100) NOT NULL,
                 account_number VARCHAR(30) NOT NULL,
                 status ENUM("pending","processed","rejected") DEFAULT "pending",
                 notes TEXT DEFAULT NULL,
