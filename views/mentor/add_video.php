@@ -26,7 +26,7 @@
          <div class="form-group">
   <label>File Video *</label>
   <input type="file" name="video_file" accept="video/mp4,video/webm,video/ogg" style="padding:.4rem" onchange="cekVideo(this)" required>
-  <small style="color:var(--gray-500);font-size:.8rem">Format: MP4, WEBM · Maks 500MB</small>
+  <small style="color:var(--gray-500);font-size:.8rem">Format: MP4, WEBM · Maks 100MB</small>
   <div id="videoMsg" style="display:none;margin-top:.35rem;font-size:.8rem;color:var(--success)">✅ Video siap diupload!</div>
 </div>
 
