@@ -317,7 +317,7 @@ try {
         }
 
         flash('success', 'Video berhasil dihapus.');
-        redirect('/mentor/courses');
+        redirect('/mentor/course/' . $courseId . '/video/add');
     }
 
     public static function myStudents(): void
