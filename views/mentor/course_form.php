@@ -104,7 +104,7 @@ $action = $isEdit ? BASE_PATH . '/mentor/course/' . $course['id'] . '/edit' : BA
         <div class="form-group" style="margin-top:1rem">
           <label>Video Pertama (opsional)</label>
           <input type="file" name="video_file" id="videoInput" accept="video/mp4,video/webm,video/ogg" style="padding:.4rem" onchange="cekVideo(this)">
-          <small style="color:var(--gray-500);font-size:.8rem">MP4, WEBM, OGG · Maks 500MB</small>
+          <small style="color:var(--gray-500);font-size:.8rem">MP4, WEBM, OGG · Maks 100MB</small>
           <div id="videoMsg" style="display:none;margin-top:.35rem;font-size:.8rem;color:var(--success)">✅ Video siap diupload!</div>
         </div>
 
