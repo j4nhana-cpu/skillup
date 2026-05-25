@@ -136,7 +136,7 @@ class AdminController
     public static function revenue(): void
     {
         $shares = Database::rows(
-            'SELECT rs.*, c.title AS course_title, u.name AS mentor_name
+            'SELECT rs.*, c.title AS course_title, u.name AS mentor_name, u.bank_account AS mentor_bank_account
              FROM revenue_shares rs
              JOIN users u ON u.id=rs.mentor_id
              JOIN enrollments e ON e.id=rs.enrollment_id
@@ -152,7 +152,7 @@ class AdminController
         );
 
         $payoutRequests = Database::rows(
-            'SELECT p.*, u.name AS mentor_name
+            'SELECT p.*, u.name AS mentor_name, u.bank_account AS mentor_bank_account
              FROM mentor_payouts p
              JOIN users u ON u.id = p.mentor_id
              ORDER BY p.requested_at DESC'

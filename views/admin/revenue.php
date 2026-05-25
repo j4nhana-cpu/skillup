@@ -33,23 +33,14 @@
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>Tanggal</th><th>Mentor</th><th>Jumlah</th><th>Status</th><th>Aksi</th></tr>
-        </thead>
-        <tbody>
-        <?php foreach ($payoutRequests as $pr): ?>
-        <tr>
-          <td style="font-size:.8rem;color:var(--gray-500)"><?= date('d M Y H:i', strtotime($pr['requested_at'])) ?></td>
-          <td><strong><?= e($pr['mentor_name']) ?></strong></td>
-          <td><?= rupiah($pr['amount']) ?></td>
-          <td>
-            <?php if ($pr['status'] === 'pending'): ?>
-              <span class="badge badge-warning">Menunggu</span>
-            <?php elseif ($pr['status'] === 'processed'): ?>
-              <span class="badge badge-success">Diverifikasi</span>
-            <?php else: ?>
-              <span class="badge badge-danger">Ditolak</span>
-            <?php endif; ?>
-          </td>
+            <tr><th>Tanggal</th><th>Mentor</th><th>Rekening</th><th>Jumlah</th><th>Status</th><th>Aksi</th></tr>
+          </thead>
+          <tbody>
+          <?php foreach ($payoutRequests as $pr): ?>
+          <tr>
+            <td style="font-size:.8rem;color:var(--gray-500)"><?= date('d M Y H:i', strtotime($pr['requested_at'])) ?></td>
+            <td><strong><?= e($pr['mentor_name']) ?></strong></td>
+            <td style="font-size:.85rem;color:var(--gray-600)"><?= e($pr['mentor_bank_account'] ?? '-') ?></td>
           <td>
             <?php if ($pr['status'] === 'pending'): ?>
             <form method="POST" action="<?= BASE_PATH ?>/admin/payout/process" style="display:flex;gap:.35rem">
@@ -83,8 +74,7 @@
           <td style="font-size:.8rem;color:var(--gray-500)"><?= date('d M Y', strtotime($s['created_at'])) ?></td>
           <td><strong><?= e($s['mentor_name']) ?></strong></td>
           <td style="font-size:.8rem">
-  <span style="font-weight:600"><?= e($pr['bank_name'] ?? '-') ?></span><br>
-  <?= e($pr['account_number'] ?? '-') ?>
+  <span style="font-weight:600"><?= e($s['mentor_bank_account'] ?? '-') ?></span>
 </td>
           <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.85rem"><?= e($s['course_title']) ?></td>
           <td><?= rupiah($s['gross_amount']) ?></td>
