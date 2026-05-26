@@ -7,11 +7,12 @@
   </div>
   <?php include APP_ROOT . '/views/layouts/flash.php'; ?>
 
-  <!-- Statistik sentimen -->
+  <!-- Statistik sentimen berdasarkan rating -->
   <?php
-  $sentCountPos = count(array_filter($reviews, fn($r) => $r['sentiment']==='positif'));
-  $sentCountNet = count(array_filter($reviews, fn($r) => $r['sentiment']==='netral'));
-  $sentCountNeg = count(array_filter($reviews, fn($r) => $r['sentiment']==='negatif'));
+  $reviews = array_map(fn($r) => array_merge($r, ['rating_sentiment' => $r['rating'] <= 2 ? 'negatif' : ($r['rating'] === 3 ? 'netral' : 'positif')]), $reviews);
+  $sentCountPos = count(array_filter($reviews, fn($r) => $r['rating_sentiment'] === 'positif'));
+  $sentCountNet = count(array_filter($reviews, fn($r) => $r['rating_sentiment'] === 'netral'));
+  $sentCountNeg = count(array_filter($reviews, fn($r) => $r['rating_sentiment'] === 'negatif'));
   $total = count($reviews) ?: 1;
   ?>
   <div class="grid-3" style="margin-bottom:1.5rem">
@@ -43,7 +44,7 @@
           <td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.85rem"><?= e($r['course_title']) ?></td>
           <td><?= str_repeat('⭐', $r['rating']) ?></td>
           <td style="max-width:220px;font-size:.85rem"><?= e(mb_substr($r['comment'] ?? '', 0, 80)) ?><?= mb_strlen($r['comment']??'')>80?'...':'' ?></td>
-          <td><span class="badge sentiment-<?= $r['sentiment'] ?>"><?= $r['sentiment'] ?></span></td>
+          <td><span class="badge sentiment-<?= $r['rating_sentiment'] ?>"><?= $r['rating_sentiment'] ?></span></td>
           <td style="font-size:.8rem;color:var(--gray-500)"><?= date('d M Y', strtotime($r['created_at'])) ?></td>
         </tr>
         <?php endforeach; ?>

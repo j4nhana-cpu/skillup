@@ -41,6 +41,8 @@
             <td style="font-size:.8rem;color:var(--gray-500)"><?= date('d M Y H:i', strtotime($pr['requested_at'])) ?></td>
             <td><strong><?= e($pr['mentor_name']) ?></strong></td>
             <td style="font-size:.85rem;color:var(--gray-600)"><?= e($pr['mentor_bank_account'] ?? '-') ?></td>
+          <td><?= rupiah($pr['amount']) ?></td>
+          <td><span class="badge <?= $pr['status'] === 'pending' ? 'badge-warning' : 'badge-success' ?>"><?= e($pr['status']) ?></span></td>
           <td>
             <?php if ($pr['status'] === 'pending'): ?>
             <form method="POST" action="<?= BASE_PATH ?>/admin/payout/process" style="display:flex;gap:.35rem">
