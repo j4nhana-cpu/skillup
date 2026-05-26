@@ -62,13 +62,10 @@ class AIService
             str_contains($msg, 'full stack') ||
             str_contains($msg, 'coding') ||
             str_contains($msg, 'pemrograman')
-        ) {
+       ) {
             $responses = [
-                "Pilihan yang tepat! 🚀 Kelas Web Development SkillUp mencakup:\n\n• HTML & CSS dasar sampai mahir\n• JavaScript & DOM Manipulation\n• PHP Native — logika server-side dari nol\n• Laravel — framework PHP paling populer di Indonesia\n• Database MySQL & Eloquent ORM\n\nKamu akan langsung praktek bikin project nyata seperti sistem login, CRUD, hingga REST API. Harga mulai Rp 149.000 saja!",
-
-                "Seru banget kalau kamu tertarik web dev! Di kelas ini kamu bakal belajar:\n\n• Dasar HTML/CSS & Flexbox/Grid\n• PHP dari variabel sampai OOP\n• Laravel (routing, blade, migration, controller)\n• Deploy project ke server\n\nCocok banget buat kamu yang mau jadi web developer profesional. Mau langsung daftar atau ada yang mau ditanyain dulu?",
-
-                "Kelas PHP & Laravel kami sudah diikuti 2.000+ siswa lho! Kurikulumnya disusun bersama developer senior yang sudah 10+ tahun di industri. Kamu bakal dapat:\n\n• 50+ video materi HD\n• Source code tiap modul bisa didownload\n• Forum diskusi aktif bareng sesama siswa\n• Sertifikat resmi setelah lulus\n\nMulai dari Rp 149.000 — worth it banget!"
+                "Untuk kelas Web Development, materi difokuskan pada pemrograman full-stack. Kamu bakal belajar dari dasar:\n\n• Frontend: HTML, CSS (Layouting), dan JavaScript dasar.\n• Backend: PHP Dasar hingga konsep OOP.\n• Framework: Penggunaan Laravel (Routing, Controller, Views, Migration).\n• Database: Operasi CRUD dengan MySQL.\n\nPembelajaran berbasis proyek (bikin sistem utuh).",
+                "Kelas Web Dev di sini cocok untuk yang mau belajar bikin aplikasi web dari nol. Kurikulumnya mencakup materi HTML/CSS untuk tampilan, logika backend pakai PHP Native, dan manajemen database MySQL. Di bagian akhir juga ada materi opsional untuk perkenalan framework Laravel."
             ];
             return $responses[array_rand($responses)];
         }
@@ -231,17 +228,17 @@ class AIService
 
         // B7. Cara Beli / Akses Kursus
         if (
-            str_contains($msg, 'cara beli') ||
-            str_contains($msg, 'gimana beli') ||
-            str_contains($msg, 'cara dapet') ||
-            str_contains($msg, 'cara akses') ||
-            str_contains($msg, 'cara ikut') ||
+            str_contains($msg, 'cara beli kursus') ||
+            str_contains($msg, 'gimana beli kursus') ||
+            str_contains($msg, 'cara dapet kursus') ||
+            str_contains($msg, 'cara akses kursus') ||
+            str_contains($msg, 'cara ikut kursus') ||
             str_contains($msg, 'cara daftar kursus') ||
-            str_contains($msg, 'order') ||
-            str_contains($msg, 'checkout') ||
+            str_contains($msg, 'order kursus') ||
+            str_contains($msg, 'checkout kursus') ||
             str_contains($msg, 'beli kursus') ||
-            $msg === 'beli' ||  
             $msg === 'gimana beli' ||  
+            $msg === 'bagaimana cara membeli kursus' || 
             $msg === 'Bagaimana beli' 
         ) {
             return "Cara beli kursus di SkillUp super mudah! 🛒\n\n1. Daftar / login ke akun SkillUp kamu\n2. Pilih kursus yang kamu inginkan\n3. Klik tombol 'Beli Sekarang'\n4. Pilih metode pembayaran (e-wallet, transfer bank, kartu kredit)\n5. Selesaikan pembayaran\n6. Kursus langsung aktif di dashboard kamu!\n\nSeluruh proses biasanya selesai dalam 5 menit. Ada yang mau ditanyain lagi?";
@@ -289,7 +286,7 @@ class AIService
             str_contains($msg, 'email') ||
             str_contains($msg, 'komplain') ||
             str_contains($msg, 'lapor')||
-            $msg === 'tolong' || 
+            $msg === 'tolong bantuan' || 
             $msg === 'minta bantuan' ||
             $msg === 'butuh bantuan' 
         ) {
@@ -356,12 +353,7 @@ class AIService
         // --------------------------------------------------------
         // BLOK D — DEFAULT
         // --------------------------------------------------------
-        $defaults = [
-            "Wah, pertanyaan menarik! Tapi saya belum punya info lengkap soal itu. Kamu bisa menghubungi tim support kami di 0821-7052-3128 (Senin–Jumat, 09.00–17.00) atau email ke support@skillup.id. Mereka akan dengan senang hati membantu kamu! 😊",
-            "Maaf, saya belum mengerti maksudnya. Bisa jelaskan lagi dengan kata kunci yang lebih simpel? Atau kamu bisa langsung hubungi tim support kami di 0821-7052-3128 (Senin–Jumat, 09.00–17.00) atau email ke support@skillup.id.",
-            "Saya masih asisten dalam tahap belajar. Untuk bantuan lebih lanjut, kamu juga bisa hubungi support@skillup.id ya!"
-        ];
-        return $defaults[array_rand($defaults)];
+        return "Maaf, saya belum mengerti maksudnya atau belum memiliki informasi lengkap mengenai hal tersebut. Silakan gunakan kata kunci yang lebih spesifik seputar kelas, atau kamu bisa langsung menghubungi tim support kami melalui WhatsApp di 0821-7052-3128 (Senin–Jumat, 09.00–17.00 WIB) maupun email ke support@skillup.id.";
     }
 
     // ============================================================
