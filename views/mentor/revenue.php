@@ -106,7 +106,7 @@
         <tbody>
         <?php foreach ($payoutRequests as $pr): ?>
         <tr>
-          <td style="font-size:.85rem"><?= date('d M Y H:i', strtotime($pr['requested_at'])) ?></td>
+          <td style="font-size:.85rem"><?= date('d M Y', strtotime($pr['requested_at'])) ?></td>
           <td><?= rupiah($pr['amount']) ?></td>
           <td>
             <?php if ($pr['status'] === 'pending'): ?>
