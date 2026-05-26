@@ -178,10 +178,6 @@ class AIService
             str_contains($msg, 'bayar') ||
             str_contains($msg, 'biaya') ||
             str_contains($msg, 'murah') ||
-            str_contains($msg, 'promo') ||
-            str_contains($msg, 'diskon') ||
-            str_contains($msg, 'gratis') ||
-            str_contains($msg, 'cicil') ||
             str_contains($msg, 'transfer') ||
             str_contains($msg, 'payment') ||
             str_contains($msg, 'midtrans') ||
@@ -189,14 +185,7 @@ class AIService
             str_contains($msg, 'ovo') ||
             str_contains($msg, 'dana')
         ) {
-            $responses = [
-                "Belajar di SkillUp sangat terjangkau! Harga kursus mulai dari Rp 50.000 saja. Tersedia juga paket bundling yang lebih hemat. Kamu bisa bayar via transfer bank, GoPay, OVO, DANA, atau kartu kredit melalui Midtrans yang aman.",
-
-                "Kami sering adain promo lho! Pantau terus halaman utama SkillUp atau follow sosmed kami untuk dapat info diskon lebih awal. Metode pembayaran kami sangat lengkap: e-wallet, transfer bank, bahkan kartu kredit bisa dicicil 0%.",
-
-                "Semua kursus SkillUp dibeli sekali, akses selamanya — tidak ada biaya langganan bulanan. Harga mulai Rp 50.000 dan bisa bayar pakai GoPay, OVO, DANA, atau transfer bank via Midtrans."
-            ];
-            return $responses[array_rand($responses)];
+            return "Biaya untuk setiap kelas di SkillUp bervariasi, berkisar antara Rp 50.000 hingga Rp 159.000 per kursus tergantung pada kelengkapan topik dan jumlah modul video di dalamnya.\n\nSistem pembayaran di platform ini menggunakan sistem sekali bayar (one-time payment), yang berarti tidak ada biaya langganan bulanan atau biaya tersembunyi tambahan setelahnya. Begitu pembayaran selesai, akses ke seluruh materi video, kuis, dan aset kelas akan terbuka secara permanen (selamanya).\n\nUntuk metode pembayaran, sistem kami terintegrasi secara otomatis sehingga kamu tidak perlu melakukan konfirmasi manual lewat bukti transfer. Metode yang tersedia meliputi:\n1. Transfer Bank / Virtual Account (VA): Mendukung Bank Mandiri, BCA, BNI, BRI, dan bank lainnya.\n2. E-Wallet: Pembayaran instan via scan QRIS, GoPay, OVO, DANA, atau LinkAja.\n\nSetelah status pada gerbang pembayaran (payment gateway) dinyatakan berhasil, kelas yang dibeli akan langsung aktif di dashboard akun kamu dalam waktu beberapa menit.";
         }
 
         // B3. Kursus / Belajar (Umum)
@@ -208,31 +197,10 @@ class AIService
             str_contains($msg, 'pelajaran') ||
             str_contains($msg, 'modul') ||
             str_contains($msg, 'video')
-        ) {
-            $responses = [
-                "Saat ini kami punya kelas unggulan: Web Development (PHP/Laravel), UI/UX Design (Figma), dan Social Media Marketing. Kamu tertarik yang mana?",
-                "Kamu bisa mulai belajar dengan memilih kursus di halaman katalog. Setiap kursus punya video materi dan tugas praktik agar kamu cepat mahir!",
-                "Di SkillUp, kamu bisa belajar sesuai kecepatanmu sendiri. Tidak ada batas waktu, materi bisa diakses selamanya setelah dibeli."
-            ];
-            return $responses[array_rand($responses)];
+       ) {
+            return "Sistem pembelajaran di SkillUp dirancang dengan metode belajar mandiri (self-paced learning) yang sepenuhnya berbasis pada materi video rekaman. Setelah menyelesaikan proses pembelian, seluruh rangkaian video tutorial di dalam kelas tersebut akan langsung terbuka dan dapat diakses kapan saja tanpa batas waktu.\n\nBerikut adalah bidang pemfokusan video materi yang tersedia saat ini:\n• Web Development (Membahas HTML, CSS, PHP Native, hingga Laravel)\n• UI/UX Design (Membahas Alur Kerja Desain dan Praktik Tool Figma)\n• Social Media Marketing (Membahas Strategi Konten, Copywriting, dan Iklan)\n• Data Analyst (Membahas Rumus Excel dan Dasar Query SQL)\n• Desain Grafis (Membahas Praktik Pembuatan Visual Menggunakan Canva)\n\nDetail susunan judul video untuk setiap kelas dapat kamu lihat langsung melalui halaman Katalog Kursus.";
         }
-
-        // B4. Sertifikat / Kelulusan
-        if (
-            str_contains($msg, 'sertifikat') ||
-            str_contains($msg, 'lulus') ||
-            str_contains($msg, 'ijazah') ||
-            str_contains($msg, 'bukti') ||
-            str_contains($msg, 'diakui')
-        ) {
-            $responses = [
-                "Tentu saja! Kamu akan mendapatkan sertifikat resmi dari SkillUp setelah menyelesaikan seluruh materi dan lulus ujian di akhir kursus. Sertifikat bisa langsung diunduh dalam format PDF.",
-                "Sertifikat SkillUp bisa kamu tambahkan ke profil LinkedIn atau portofolio lamaran kerja. Format PDF berkualitas tinggi, bisa langsung unduh setelah lulus ujian akhir.",
-                "Setelah kamu menyelesaikan semua modul dan lulus ujian, sertifikat langsung tersedia di dashboard akun kamu. Banyak alumni kami yang berhasil dapat pekerjaan berbekal sertifikat ini lho!"
-            ];
-            return $responses[array_rand($responses)];
-        }
-
+        
         // B5. Mentor / Pengajar
         if (
             str_contains($msg, 'mentor') ||
@@ -242,12 +210,7 @@ class AIService
             str_contains($msg, 'tutor') ||
             str_contains($msg, 'siapa yang ngajar')
         ) {
-            $responses = [
-                "Mentor di SkillUp adalah para praktisi ahli yang sudah berpengalaman di industri kreatif dan teknologi. Kamu bakal diajarin dari nol sampai bisa!",
-                "Semua mentor SkillUp adalah profesional aktif, bukan hanya teoritis. Mereka kerja di startup, agency, dan perusahaan tech ternama di Indonesia — jadi ilmunya langsung relevan dengan kebutuhan industri.",
-                "Mentor kami dipilih ketat: minimal 5 tahun pengalaman di bidangnya dan sudah terbukti bisa mengajar dengan cara yang mudah dipahami. Kamu juga bisa tanya langsung di forum diskusi kursus!"
-            ];
-            return $responses[array_rand($responses)];
+            return "Seluruh materi video tutorial di SkillUp disusun dan disampaikan oleh instruktur serta praktisi yang bergerak di bidangnya masing-masing. Penjelasan dalam video dirancang secara terstruktur mulai dari konsep dasar hingga contoh implementasi praktis, sehingga isi materi dapat dipelajari secara mandiri dengan mudah oleh pengguna.";
         }
 
         // B6. Login / Daftar / Akun / Password
@@ -263,12 +226,7 @@ class AIService
             str_contains($msg, 'sign up') ||
             str_contains($msg, 'sign in')
         ) {
-            $responses = [
-                "Kamu bisa daftar akun baru atau login menggunakan email yang terdaftar. Jika lupa password, klik saja tombol 'Lupa Password' di halaman login.",
-                "Pendaftaran di SkillUp gratis dan cepat — cukup isi nama, email, dan password. Verifikasi email lalu langsung bisa mulai belajar!",
-                "Kalau kamu lupa password, klik 'Lupa Password' di halaman login. Kami akan kirim link reset ke email kamu dalam hitungan menit. Pastikan cek folder spam juga ya!"
-            ];
-            return $responses[array_rand($responses)];
+            return "Untuk pengelolaan akun di platform SkillUp, berikut adalah panduan operasionalnya:\n\n1. Pembuatan Akun (Daftar/Sign Up): Silakan akses menu 'Daftar' pada halaman web dengan mengisi data nama lengkap, alamat email aktif, dan kata sandi.\n2. Masuk Sistem (Login/Sign In): Gunakan kombinasi alamat email dan kata sandi yang telah terregistrasi melalui halaman login resmi platform.\n3. Perubahan Kata Sandi (Ubah Password): Jika kamu ingin memperbarui atau mengubah kata sandi lama, silakan masuk ke akun terlebih dahulu, lalu akses menu pengaturan yang terdapat di halaman Profil User.\n\nJika kamu mengalami kendala teknis lebih lanjut mengenai akses masuk ke sistem, silakan hubungi layanan bantuan tim support.";
         }
 
         // B7. Cara Beli / Akses Kursus
@@ -283,31 +241,12 @@ class AIService
             str_contains($msg, 'checkout') ||
             str_contains($msg, 'beli kursus') ||
             $msg === 'beli' ||  
-            $msg === 'gimana beli'
+            $msg === 'gimana beli' ||  
+            $msg === 'Bagaimana beli' 
         ) {
             return "Cara beli kursus di SkillUp super mudah! 🛒\n\n1. Daftar / login ke akun SkillUp kamu\n2. Pilih kursus yang kamu inginkan\n3. Klik tombol 'Beli Sekarang'\n4. Pilih metode pembayaran (e-wallet, transfer bank, kartu kredit)\n5. Selesaikan pembayaran\n6. Kursus langsung aktif di dashboard kamu!\n\nSeluruh proses biasanya selesai dalam 5 menit. Ada yang mau ditanyain lagi?";
         }
 
-        // B8. Karir / Pekerjaan / Gaji
-        if (
-            str_contains($msg, 'karir') ||
-            str_contains($msg, 'kerja') ||
-            str_contains($msg, 'gaji') ||
-            str_contains($msg, 'loker') ||
-            str_contains($msg, 'lowongan') ||
-            str_contains($msg, 'freelance') ||
-            str_contains($msg, 'portfolio') ||
-            str_contains($msg, 'portofolio') ||
-            str_contains($msg, 'magang') ||
-            str_contains($msg, 'hiring')
-        ) {
-            $responses = [
-                "SkillUp tidak hanya mengajarkan skill, tapi juga membantu kamu siap kerja! Di setiap kursus ada modul khusus tentang cara membangun portofolio dan tips melamar kerja di bidang tersebut. Banyak alumni kami yang berhasil dapat kerja atau klien freelance dalam 3 bulan setelah lulus!",
-                "Skill digital yang kamu pelajari di SkillUp sangat relevan dengan kebutuhan industri saat ini. Web developer, UI/UX designer, dan digital marketer adalah profesi yang gajinya terus naik. Mau tahu kursus mana yang paling cepat menghasilkan? Coba cek halaman katalog kami!",
-                "Banyak alumni SkillUp yang sukses jadi freelancer dengan penghasilan jutaan per proyek. Kuncinya adalah portofolio yang kuat — dan itu yang akan kami bantu kamu buat selama kursus!"
-            ];
-            return $responses[array_rand($responses)];
-        }
 
         // B9. Durasi / Lama Belajar / Jadwal
         if (
@@ -349,9 +288,12 @@ class AIService
             str_contains($msg, 'wa') ||
             str_contains($msg, 'email') ||
             str_contains($msg, 'komplain') ||
-            str_contains($msg, 'lapor')
+            str_contains($msg, 'lapor')||
+            $msg === 'tolong' || 
+            $msg === 'minta bantuan' ||
+            $msg === 'butuh bantuan' 
         ) {
-            return "Untuk bantuan lebih lanjut, kamu bisa hubungi tim support SkillUp melalui:\n\n📧 Email: support@skillup.id\n💬 WhatsApp: 0812-3456-7890 (Senin–Jumat, 09.00–17.00)\n📷 Instagram: @skillup.id\n\nRespon email biasanya dalam 1x24 jam di hari kerja. Untuk pertanyaan cepat, WhatsApp lebih disarankan!";
+            return "Untuk bantuan lebih lanjut, kamu bisa hubungi tim support SkillUp melalui:\n\n📧 Email: support@skillup.id\n💬 WhatsApp: 0821-7052-3128 (Senin–Jumat, 09.00–17.00)\n📷 Instagram: @skillup.id\n\nRespon email biasanya dalam 1x24 jam di hari kerja. Untuk pertanyaan cepat, WhatsApp lebih disarankan!";
         }
 
         // --------------------------------------------------------
@@ -415,8 +357,8 @@ class AIService
         // BLOK D — DEFAULT
         // --------------------------------------------------------
         $defaults = [
-            "Wah, pertanyaan menarik! Tapi saya belum punya info lengkap soal itu. Coba tanya soal 'kursus', 'harga', 'sertifikat', atau 'cara beli' ya!",
-            "Maaf, saya belum mengerti maksudnya. Bisa jelaskan lagi dengan kata kunci yang lebih simpel? Contoh: 'kursus PHP', 'harga kelas', atau 'cara daftar'.",
+            "Wah, pertanyaan menarik! Tapi saya belum punya info lengkap soal itu. Kamu bisa menghubungi tim support kami di 0821-7052-3128 (Senin–Jumat, 09.00–17.00) atau email ke support@skillup.id. Mereka akan dengan senang hati membantu kamu! 😊",
+            "Maaf, saya belum mengerti maksudnya. Bisa jelaskan lagi dengan kata kunci yang lebih simpel? Atau kamu bisa langsung hubungi tim support kami di 0821-7052-3128 (Senin–Jumat, 09.00–17.00) atau email ke support@skillup.id.",
             "Saya masih asisten dalam tahap belajar. Untuk bantuan lebih lanjut, kamu juga bisa hubungi support@skillup.id ya!"
         ];
         return $defaults[array_rand($defaults)];
